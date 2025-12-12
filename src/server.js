@@ -10,6 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
 // Routes
+import authRoutes from './routes/authRoute.js'
+app.use('/api', authRoutes)
 
 
 
