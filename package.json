@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec /home/supremo/.nvm/versions/node/v20.19.6/bin/node src/server.js"
+    "dev": "nodemon --exec /home/supremo/.nvm/versions/node/v20.19.6/bin/node src/server.js",
+    "seed": "node prisma/seed.js"
   },
   "keywords": [],
   "author": "",
