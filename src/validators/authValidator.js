@@ -25,3 +25,13 @@ export const loginSchema = z.object({
     email: emailSchema,
     password: z.string().min(1, "Password is required"),
 });
+
+export const forgotPasswordSchema = z.object({
+    email: emailSchema,
+});
+
+export const resetPasswordSchema = z.object({
+    email: emailSchema,
+    code: z.string().length(4, "Code must be 4 digits"),
+    newPassword: passwordSchema,
+});
