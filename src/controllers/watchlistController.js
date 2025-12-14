@@ -59,25 +59,60 @@ const removeFromWatchList = async (req, res) => {
     try {
         const movieId = req.params.id;
         const watchListItem = await prisma.watchListItem.findUnique({
-            where:{id:movieId}
+            where: { id: movieId }
         })
-        if(!watchListItem){
-            return res.status(404).json({error:"Watchlist item not found"})
+        if (!watchListItem) {
+            return res.status(404).json({ error: "Watchlist item not found" })
         }
-        if(watchListItem.userId !== req.user.id){
-            return res.status(403).json({error:"You are not authorized to remove this item"})
+        if (watchListItem.userId !== req.user.id) {
+            return res.status(403).json({ error: "You are not authorized to remove this item" })
         }
         await prisma.watchListItem.delete({
-            where:{id:movieId}
+            where: { id: movieId }
         })
-       
+
         return res.status(200).json({
-            status:"Success",
-            message:"Watchlist item removed successfully"
+            status: "Success",
+            message: "Watchlist item removed successfully"
         })
     } catch (error) {
         console.error("Error in removeFromWatchList:", error);
         return res.status(500).json({ error: 'Internal Server Error', details: error.message })
     }
 }
-export { addToWatchlist, removeFromWatchList }
+const updateWatchlist = async (req, res) => {
+    try {
+        const { status, rating, notes } = req.body;
+        const movieId = req.params.id;
+
+        const watchItem = await prisma.watchListItem.findUnique({
+            where: { id: movieId },
+        });
+        if (!watchItem) {
+            return res.status(404).json({ error: "Watchlist item not found" });
+
+        }
+        if (watchItem.userId !== req.user.id) {
+            return res.status(403).json({ error: "You are not authorized to update this item" })
+        }
+        const updatedItem = await prisma.watchListItem.update({
+            where: { id: movieId },
+            data: {
+                status,
+                rating,
+                notes
+            }
+        })
+        return res.status(200).json({
+            status: "Success",
+            message: "Watchlist item updated successfully",
+            data: {
+                watchListItem: updatedItem
+            }
+        })
+    } catch (error) {
+        console.error("Error in updateWatchlist:", error);
+        return res.status(500).json({ error: 'Internal Server Error', details: error.message })
+    }
+}
+export { addToWatchlist, removeFromWatchList, updateWatchlist }
