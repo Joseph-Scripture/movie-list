@@ -15,8 +15,11 @@ app.use(express.urlencoded({ extended: true }))
 // Routes
 import authRoutes from './routes/authRoute.js'
 import watchlistRoutes from './routes/watchlistRoutes.js'
+import movieRoutes from './routes/movieRoutes.js'
+
 app.use('/api', authRoutes)
 app.use('/watchlist', watchlistRoutes)
+app.use('/movies', movieRoutes)
 
 
 

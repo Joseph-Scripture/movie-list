@@ -1,0 +1,9 @@
+{
+  "title": "The Grand Budapest Hotel",
+  "director": "Wes Anderson",
+  "releaseyear": 2014,
+  "genres": ["Comedy", "Drama"],
+  "runtime": 99,
+  "overview": "A legendary concierge at a famous European hotel...",
+  "posterUrl": "https://example.com/budapest.jpg"
+}

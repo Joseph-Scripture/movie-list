@@ -115,4 +115,26 @@ const updateWatchlist = async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error', details: error.message })
     }
 }
-export { addToWatchlist, removeFromWatchList, updateWatchlist }
+const getWatchlist = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const watchlist = await prisma.watchListItem.findMany({
+            where: { userId },
+            include: {
+                movie: true // Include movie details
+            },
+            orderBy: { createdAt: 'desc' }
+        });
+
+        return res.status(200).json({
+            status: "Success",
+            results: watchlist.length,
+            data: { watchlist }
+        });
+    } catch (error) {
+        console.error("Error in getWatchlist:", error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+export { addToWatchlist, removeFromWatchList, updateWatchlist, getWatchlist }
